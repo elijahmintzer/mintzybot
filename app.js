@@ -5,9 +5,10 @@ const client = new Discord.Client();
 //Config files
 const config = {
     token: process.env.TOKEN,
-    owner: process.env.OWNER,
-    prefix: process.env.PREFIX
+    owner: process.env.OWNER
 }
+
+const BLUE_ROLE = '726506610578423990';
 
 //When index.js is executed, then the terminal logs that the bot is connected.
 //It will also get the activity of the bot to "I'm being Built!".
@@ -16,9 +17,10 @@ client.on('ready', ()=> {
     client.user.setActivity("I'm Being Built!");
 });
 
-//When a user types "!getavatar", the bot gets the avatar of the author.
-// When a user types "!getavatar @user", it will get the avatar of that user.
+
 client.on('message', message => {
+//When a user types "!getavatar", the bot gets the avatar of the author.
+//When a user types "!getavatar @user", it will get the avatar of that user.
     if(message.content.startsWith('!getavatar')){
         if(!message.mentions.users.size){
             return message.channel.send(`Your avatar: ${message.author.displayAvatarURL()}`);
@@ -28,13 +30,19 @@ client.on('message', message => {
         });
         message.channel.send(avatarList);
     }
+//When a user types "!role blue", it will give them a role that has the color of blue.
+//It will also say that "@user has been given the blue role".
+    if(message.content == '!role blue'){
+        message.member.roles.add(BLUE_ROLE);
+        message.channel.send(`${message.author} has been given the blue role`);
+    }
 });
 
 //When a user joins the server, the bot says "Welcome, @user." in #welcome chat.
 client.on('guildMemberAdd', member => {
-    const channel = member.guild.channels.cache.find(ch => ch.name === 'welcome');
+    const welcomechannel = member.guild.channels.cache.find(ch => ch.name === 'welcome');
 
-    if(!channel) return;
+    if(!welcomechannel) return;
 
     channel.send(`Welcome, ${member}`);
 });
