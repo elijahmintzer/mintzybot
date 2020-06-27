@@ -10,7 +10,7 @@ We plan to add the following:
 
 -And more things that we cannot list.
 
-Dependencies:
+# Dependencies:
 
 -DiscordJS
 
