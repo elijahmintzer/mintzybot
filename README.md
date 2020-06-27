@@ -9,3 +9,9 @@ We plan to add the following:
 -Music (plays music of your choice in a voice channel)
 
 -And more things that we cannot list.
+
+# Dependencies:
+
+-DiscordJS
+
+-NodeJS
