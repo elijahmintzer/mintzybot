@@ -32,7 +32,7 @@ client.on('message', message => {
 
 //When a user types "!getavatar", the bot gets the avatar of the author.
 //When a user types "!getavatar @user", it will get the avatar of that user.
-    if(message.content.startsWith('!getavatar')){
+    if(cmd.toLowerCase().startsWith(`${prefix}getavatar`)){
         if(!message.mentions.users.size){
             return message.channel.send(`Your avatar: ${message.author.displayAvatarURL()}`);
         }
@@ -55,6 +55,22 @@ client.on('message', message => {
         if(args[1] === 'green'){
             message.member.roles.add(GREEN_ROLE);
             message.channel.send(`${member}'s color has been added.`);
+        }
+    }
+//When a user types "!colorremove blue", it will remove the blue role from that user.
+//It will also say that "@user's color has been removed".
+    if(cmd.toLowerCase().startsWith(`${prefix}colorremove`)){
+        if(args[1] === 'blue'){
+            message.member.roles.remove(BLUE_ROLE);
+            message.channel.send(`${member}'s color has been removed.`);
+        }
+        if(args[1] === 'red'){
+            message.member.roles.remove(RED_ROLE);
+            message.channel.send(`${member}'s color has been removed.`);
+        }
+        if(args[1] === 'green'){
+            message.member.roles.remove(GREEN_ROLE);
+            message.channel.send(`${member}'s color has been removed.`);
         }
     }
 });
