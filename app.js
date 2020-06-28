@@ -73,6 +73,18 @@ client.on('message', message => {
             message.channel.send(`${member}'s color has been removed.`);
         }
     }
+    if(cmd.toLowerCase().startsWith(`${prefix}help`)){
+        const embed = new Discord.MessageEmbed()
+            .setColor("69F5F0")
+            .setTitle("MintzyBot - Help Menu")
+            .addField("!help", "Displays a list of commands.")
+            .addField("!coloradd <red, green, blue>", "Gives a role that has a color.")
+            .addField("!colorremove <red, green, blue>", "Removes a role that has a color.")
+            .addField("!getavatar <@user>", "Gets the user's avatar."
+            .addField("!serverstats", "Displays statistics of the server.")
+            
+            message.channel.send(embed)
+    }
 });
 
 //When a user joins the server, the bot says "Welcome, @user." in #welcome chat.
