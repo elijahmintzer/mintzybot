@@ -9,12 +9,13 @@ const config = {
     prefix: process.env.PREFIX
 }
 
-//Color Roles
+//Roles
 const BLUE_ROLE = '726512954949894186';
 const RED_ROLE = '726615170948005928';
 const GREEN_ROLE = '726615209409511444';
 const GAGGED = '726865963470815322';
 const MUTED = '727003537615224893';
+const DUNCE = '727007794821201940';
 
 //When index.js is executed, then the terminal logs that the bot is connected.
 //It will also get the activity of the bot to "I'm being Built!".
@@ -170,7 +171,7 @@ client.on('message', message => {
             }
         }
     }
-//GAG CMD
+//MUTE CMD
 //When an administrator types "!mute @user <reason>" then it will not allow the user to speak in voice chat.
 //This command is only accessible to users that have the "MUTE_MEMBERS" permission.
     if(cmd.toLowerCase().startsWith(`${prefix}mute`)){
@@ -222,16 +223,16 @@ client.on('message', message => {
 //UNMUTE CMD
 //When an administrator types "!unmute @user" then it will allow the user to speak in voice chat.
 //This command is only accessible to users that have the "MUTE_MEMBERS" permission.
-if(cmd.toLowerCase().startsWith(`${prefix}unmute`)){
-    if(message.member.hasPermission('MUTE_MEMBERS')){
-        if(!user){
-            const embed = new Discord.MessageEmbed()
-            .setColor("FF0000")
-            .setTitle("Error!")
-            .setDescription(`${member}, You need to state the user you wish to unmute!`)
+    if(cmd.toLowerCase().startsWith(`${prefix}unmute`)){
+        if(message.member.hasPermission('MUTE_MEMBERS')){
+            if(!user){
+                const embed = new Discord.MessageEmbed()
+                .setColor("FF0000")
+                .setTitle("Error!")
+                .setDescription(`${member}, You need to state the user you wish to unmute!`)
 
-            message.channel.send(embed);
-        } else {
+                message.channel.send(embed);
+            } else {
 //Checks if user does NOT have "muted" role. If user does not have role then it will remove it.
             if(!user.roles.cache.has(MUTED)){
                 const embed = new Discord.MessageEmbed()
@@ -256,6 +257,83 @@ if(cmd.toLowerCase().startsWith(`${prefix}unmute`)){
         }
     }
 }
+//DUNCE CMD
+//When an administrator types "!dunce @user" then it will not allow the user to see voice/text channels.
+//This command is only accessible to users that have the "MUTE_MEMBERS" permission.
+    if(cmd.toLowerCase().startsWith(`${prefix}dunce`)){
+        if(message.member.hasPermission(`MUTE_MEMBERS`)){
+            if(!user){
+                const embed = new Discord.MessageEmbed()
+                .setColor("FF0000")
+                .setTitle("Error!")
+                .setDescription(`${member}, You need to state the user you wish to dunce!`)
+
+                message.channel.send(embed);
+            } else {
+//Checks to see if user already has "dunce" role. If user already has dunce role it will return an error.
+//If the user does NOT have a "dunce" role, then it will give them it.
+                if(user.roles.cache.has(DUNCE)){
+                    const embed = new Discord.MessageEmbed()
+                    .setColor("FF0000")
+                    .setTitle("Error!")
+                    .setDescription(`This user is already dunced!`)
+
+                    message.channel.send(embed);
+                } else {
+                    if(user){
+                            const embed = new Discord.MessageEmbed()
+                            .setColor("FF0000")
+                            .setTitle("User has successfully been dunced.")
+                            .setDescription("This user can no longer see any text/voice channel.")
+                            .addField(`USER`, `${user}`)
+                            .addField(`ADMIN`, `${member}`)
+        
+                            message.channel.send(embed);
+                            user.roles.add(DUNCE);
+                    }
+                }
+            }
+        }
+    }
+//UNDUNCE CMD
+//When an administrator types "!undunce @user" then it will allow the user to see text/voice channels.
+//This command is only accessible to users that have the "MUTE_MEMBERS" permission.
+    if(cmd.toLowerCase().startsWith(`${prefix}undunce`)){
+        if(message.member.hasPermission('MUTE_MEMBERS')){
+            if(!user){
+                const embed = new Discord.MessageEmbed()
+                .setColor("FF0000")
+                .setTitle("Error!")
+                .setDescription(`${member}, You need to state the user you wish to undunce!`)
+
+                message.channel.send(embed);
+            } else {
+//Checks if user does NOT have "dunce" role. If user does not have role then it will remove it.
+            if(!user.roles.cache.has(DUNCE)){
+                const embed = new Discord.MessageEmbed()
+                .setColor("FF0000")
+                .setTitle("Error!")
+                .setDescription(`This user is not dunced!`)
+
+                message.channel.send(embed);
+            } else {
+                if(user){
+                    const embed = new Discord.MessageEmbed()
+                    .setColor("00ff0a")
+                    .setTitle("User has successfully been undunced")
+                    .setDescription("This user can now see text/voice channels.")
+                    .addField(`USER`, `${user}`)
+                    .addField(`ADMIN`, `${member}`)
+        
+                    message.channel.send(embed);
+                    user.roles.remove(DUNCE);
+                }
+            }
+        }
+    }
+}
+
+
 
 //END OF ADMINISTRATION CMDS
 
@@ -281,10 +359,10 @@ if(cmd.toLowerCase().startsWith(`${prefix}unmute`)){
             .setTitle("MintzyBot - Admin Help Menu")
             .addField("!gag <@user> <reason>", "Stops a user from typing in any text channel.")
             .addField("!ungag <@user>", "Allows a user to type in text channels.")
-            .addField("!mute <@user>", "Stops a user from using voice.")
+            .addField("!mute <@user> <reason>", "Stops a user from using voice.")
             .addField("!unmute <@user>", "Allows a user to talk using voice")
-            .addField("!silence <@user>", "Gives mute and gag to the user.")
-            .addField("!unsilence <@user>", "Removes mute and gag from the user.")
+            .addField("!dunce <@user>", "Stops a user from seeing any channel on the server.")
+            .addField("!undunce <@user>", "Removes dunce from a user.")
             .addField("!kick <@user>", "Kicks a member from the Discord server")
             .addField("!ban <@user>", "Bans a user from the Discord server")
 
