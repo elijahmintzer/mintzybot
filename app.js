@@ -14,6 +14,7 @@ const BLUE_ROLE = '726512954949894186';
 const RED_ROLE = '726615170948005928';
 const GREEN_ROLE = '726615209409511444';
 const GAGGED = '726865963470815322';
+const MUTED = '727003537615224893';
 
 //When index.js is executed, then the terminal logs that the bot is connected.
 //It will also get the activity of the bot to "I'm being Built!".
@@ -82,6 +83,7 @@ client.on('message', message => {
 
 //ADMINISTRATION CMDS
 
+//GAG CMD
 //When an administrator types "!gag @user <reason>" then it will not allow the user to type in text chat.
 //This command is only accessible to users that have the "MUTE_MEMBERS" permission.
     if(cmd.toLowerCase().startsWith(`${prefix}gag`)){
@@ -131,6 +133,7 @@ client.on('message', message => {
         }
     }
 
+//UNGAG CMD
 //When an administrator types "!ungag @user" then it will allow the user to type in text chat.
 //This command is only accessible to users that have the "MUTE_MEMBERS" permission.
     if(cmd.toLowerCase().startsWith(`${prefix}ungag`)){
@@ -167,6 +170,92 @@ client.on('message', message => {
             }
         }
     }
+//GAG CMD
+//When an administrator types "!mute @user <reason>" then it will not allow the user to speak in voice chat.
+//This command is only accessible to users that have the "MUTE_MEMBERS" permission.
+    if(cmd.toLowerCase().startsWith(`${prefix}mute`)){
+        if(message.member.hasPermission(`MUTE_MEMBERS`)){
+            if(!user){
+                const embed = new Discord.MessageEmbed()
+                .setColor("FF0000")
+                .setTitle("Error!")
+                .setDescription(`${member}, You need to state the user you wish to mute!`)
+
+                message.channel.send(embed);
+            }
+            if(!reason){
+                const embed = new Discord.MessageEmbed()
+                .setColor("FF0000")
+                .setTitle("Error!")
+                .setDescription(`${member}, You need to state a reason for the mute!`)
+
+                message.channel.send(embed);
+            } else {
+//Checks to see if user already has "muted" role. If user already has gagged role it will return an error.
+//If the user does NOT have a "muted" role, then it will give them it.
+                if(user.roles.cache.has(MUTED)){
+                    const embed = new Discord.MessageEmbed()
+                    .setColor("FF0000")
+                    .setTitle("Error!")
+                    .setDescription(`This user is already muted!`)
+    
+                    message.channel.send(embed);
+                } else {
+                    if(user){
+                        if(reason){
+                            const embed = new Discord.MessageEmbed()
+                            .setColor("FF0000")
+                            .setTitle("User has successfully been muted.")
+                            .setDescription("This user can no longer speak in voice.")
+                            .addField(`USER`, `${user}`)
+                            .addField(`ADMIN`, `${member}`)
+                            .addField(`REASON`, `${reason}`)
+        
+                            message.channel.send(embed);
+                            user.roles.add(MUTED);
+                        }
+                    }
+                }
+            }
+        }
+    }
+//UNMUTE CMD
+//When an administrator types "!unmute @user" then it will allow the user to speak in voice chat.
+//This command is only accessible to users that have the "MUTE_MEMBERS" permission.
+if(cmd.toLowerCase().startsWith(`${prefix}unmute`)){
+    if(message.member.hasPermission('MUTE_MEMBERS')){
+        if(!user){
+            const embed = new Discord.MessageEmbed()
+            .setColor("FF0000")
+            .setTitle("Error!")
+            .setDescription(`${member}, You need to state the user you wish to unmute!`)
+
+            message.channel.send(embed);
+        } else {
+//Checks if user does NOT have "muted" role. If user does not have role then it will remove it.
+            if(!user.roles.cache.has(MUTED)){
+                const embed = new Discord.MessageEmbed()
+                .setColor("FF0000")
+                .setTitle("Error!")
+                .setDescription(`This user is not muted!`)
+    
+                message.channel.send(embed);
+            } else {
+                if(user){
+                    const embed = new Discord.MessageEmbed()
+                    .setColor("00ff0a")
+                    .setTitle("User has successfully been unmuted")
+                    .setDescription("This user can now speak in voice.")
+                    .addField(`USER`, `${user}`)
+                    .addField(`ADMIN`, `${member}`)
+        
+                    message.channel.send(embed);
+                    user.roles.remove(MUTED);
+                }
+            }
+        }
+    }
+}
 
 //END OF ADMINISTRATION CMDS
 
