@@ -101,28 +101,30 @@ client.on('message', message => {
                 .setDescription(`${member}, You need to state a reason for the gag!`)
 
                 message.channel.send(embed);
-            }
-//Checks to see if user already has "gagged" role. If user already has gagged role it will return an error.
-            if(user.roles.cache.has(GAGGED)){
-                const embed = new Discord.MessageEmbed()
-                .setColor("FF0000")
-                .setTitle("Error!")
-                .setDescription(`This user is already gagged!`)
-
-                message.channel.send(embed);
             } else {
-                if(user){
-                    if(reason){
-                        const embed = new Discord.MessageEmbed()
-                        .setColor("FF0000")
-                        .setTitle("User has successfully been gagged")
-                        .setDescription("This user can no longer type in chat.")
-                        .addField(`USER`, `${user}`)
-                        .addField(`ADMIN`, `${member}`)
-                        .addField(`REASON`, `${reason}`)
+//Checks to see if user already has "gagged" role. If user already has gagged role it will return an error.
+//If the user does NOT have a "gagged" role, then it will give them it.
+                if(user.roles.cache.has(GAGGED)){
+                    const embed = new Discord.MessageEmbed()
+                    .setColor("FF0000")
+                    .setTitle("Error!")
+                    .setDescription(`This user is already gagged!`)
     
-                        message.channel.send(embed);
-                        user.roles.add(GAGGED);
+                    message.channel.send(embed);
+                } else {
+                    if(user){
+                        if(reason){
+                            const embed = new Discord.MessageEmbed()
+                            .setColor("FF0000")
+                            .setTitle("User has successfully been gagged")
+                            .setDescription("This user can no longer type in chat.")
+                            .addField(`USER`, `${user}`)
+                            .addField(`ADMIN`, `${member}`)
+                            .addField(`REASON`, `${reason}`)
+        
+                            message.channel.send(embed);
+                            user.roles.add(GAGGED);
+                        }
                     }
                 }
             }
@@ -140,27 +142,28 @@ client.on('message', message => {
                 .setDescription(`${member}, You need to state the user you wish to ungag!`)
 
                 message.channel.send(embed);
-            }
-        }
+            } else {
 //Checks if user does NOT have "gagged" role. If user does not have role then it will remove it.
-        if(!user.roles.cache.has(GAGGED)){
-            const embed = new Discord.MessageEmbed()
-            .setColor("FF0000")
-            .setTitle("Error!")
-            .setDescription(`This user is not gagged!`)
-
-            message.channel.send(embed);
-        } else {
-            if(user){
-                const embed = new Discord.MessageEmbed()
-                .setColor("00ff0a")
-                .setTitle("User has successfully been ungagged")
-                .setDescription("This user can now type in chat.")
-                .addField(`USER`, `${user}`)
-                .addField(`ADMIN`, `${member}`)
-    
-                message.channel.send(embed);
-                user.roles.remove(GAGGED);
+                if(!user.roles.cache.has(GAGGED)){
+                    const embed = new Discord.MessageEmbed()
+                    .setColor("FF0000")
+                    .setTitle("Error!")
+                    .setDescription(`This user is not gagged!`)
+        
+                    message.channel.send(embed);
+                } else {
+                    if(user){
+                        const embed = new Discord.MessageEmbed()
+                        .setColor("00ff0a")
+                        .setTitle("User has successfully been ungagged")
+                        .setDescription("This user can now type in chat.")
+                        .addField(`USER`, `${user}`)
+                        .addField(`ADMIN`, `${member}`)
+            
+                        message.channel.send(embed);
+                        user.roles.remove(GAGGED);
+                    }
+                }
             }
         }
     }
