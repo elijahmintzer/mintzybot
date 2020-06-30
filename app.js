@@ -111,7 +111,7 @@ client.on('message', message => {
                     const embed = new Discord.MessageEmbed()
                     .setColor("FF0000")
                     .setTitle("Error!")
-                    .setDescription(`This user is already gagged!`)
+                    .setDescription(`${user} is already gagged!`)
     
                     message.channel.send(embed);
                 } else {
@@ -119,8 +119,8 @@ client.on('message', message => {
                         if(reason){
                             const embed = new Discord.MessageEmbed()
                             .setColor("FF0000")
-                            .setTitle("User has successfully been gagged")
-                            .setDescription("This user can no longer type in chat.")
+                            .setTitle("GAGGED")
+                            .setDescription(`${user} can no longer type in chat.`)
                             .addField(`USER`, `${user}`)
                             .addField(`ADMIN`, `${member}`)
                             .addField(`REASON`, `${reason}`)
@@ -152,15 +152,15 @@ client.on('message', message => {
                     const embed = new Discord.MessageEmbed()
                     .setColor("FF0000")
                     .setTitle("Error!")
-                    .setDescription(`This user is not gagged!`)
+                    .setDescription(`${user} is not gagged!`)
         
                     message.channel.send(embed);
                 } else {
                     if(user){
                         const embed = new Discord.MessageEmbed()
                         .setColor("00ff0a")
-                        .setTitle("User has successfully been ungagged")
-                        .setDescription("This user can now type in chat.")
+                        .setTitle("UNGAGGED")
+                        .setDescription(`${user} can now type in chat.`)
                         .addField(`USER`, `${user}`)
                         .addField(`ADMIN`, `${member}`)
             
@@ -198,7 +198,7 @@ client.on('message', message => {
                     const embed = new Discord.MessageEmbed()
                     .setColor("FF0000")
                     .setTitle("Error!")
-                    .setDescription(`This user is already muted!`)
+                    .setDescription(`${user} is already muted!`)
     
                     message.channel.send(embed);
                 } else {
@@ -206,8 +206,8 @@ client.on('message', message => {
                         if(reason){
                             const embed = new Discord.MessageEmbed()
                             .setColor("FF0000")
-                            .setTitle("User has successfully been muted.")
-                            .setDescription("This user can no longer speak in voice.")
+                            .setTitle("MUTED")
+                            .setDescription(`${user} can no longer speak in voice.`)
                             .addField(`USER`, `${user}`)
                             .addField(`ADMIN`, `${member}`)
                             .addField(`REASON`, `${reason}`)
@@ -238,15 +238,15 @@ client.on('message', message => {
                 const embed = new Discord.MessageEmbed()
                 .setColor("FF0000")
                 .setTitle("Error!")
-                .setDescription(`This user is not muted!`)
+                .setDescription(`${user} is not muted!`)
     
                 message.channel.send(embed);
             } else {
                 if(user){
                     const embed = new Discord.MessageEmbed()
                     .setColor("00ff0a")
-                    .setTitle("User has successfully been unmuted")
-                    .setDescription("This user can now speak in voice.")
+                    .setTitle("UNMUTED")
+                    .setDescription(`${user} can now speak in voice.`)
                     .addField(`USER`, `${user}`)
                     .addField(`ADMIN`, `${member}`)
         
@@ -276,15 +276,15 @@ client.on('message', message => {
                     const embed = new Discord.MessageEmbed()
                     .setColor("FF0000")
                     .setTitle("Error!")
-                    .setDescription(`This user is already dunced!`)
+                    .setDescription(`${user} is already dunced!`)
 
                     message.channel.send(embed);
                 } else {
                     if(user){
                             const embed = new Discord.MessageEmbed()
                             .setColor("FF0000")
-                            .setTitle("User has successfully been dunced.")
-                            .setDescription("This user can no longer see any text/voice channel.")
+                            .setTitle("DUNCED")
+                            .setDescription(`${user} can no longer see text/voice channels.`)
                             .addField(`USER`, `${user}`)
                             .addField(`ADMIN`, `${member}`)
         
@@ -313,14 +313,14 @@ client.on('message', message => {
                 const embed = new Discord.MessageEmbed()
                 .setColor("FF0000")
                 .setTitle("Error!")
-                .setDescription(`This user is not dunced!`)
+                .setDescription(`${user} is not dunced!`)
 
                 message.channel.send(embed);
             } else {
                 if(user){
                     const embed = new Discord.MessageEmbed()
                     .setColor("00ff0a")
-                    .setTitle("User has successfully been undunced")
+                    .setTitle("UNDUNCED")
                     .setDescription("This user can now see text/voice channels.")
                     .addField(`USER`, `${user}`)
                     .addField(`ADMIN`, `${member}`)
