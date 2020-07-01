@@ -25,8 +25,7 @@ client.on('ready', ()=> {
     client.user.setActivity("I'm Being Built!");
 });
 
-
-client.on('message', message => {
+client.on("message", message => {
 
     const prefix = config.prefix;
     let args = message.content.toLowerCase().split(" ");
@@ -101,7 +100,7 @@ client.on('message', message => {
                 const embed = new Discord.MessageEmbed()
                 .setColor("FF0000")
                 .setTitle("Error!")
-                .setDescription(`${member}, You need to state a reason for the gag!`)
+                .setDescription(`${member}, You need to state a reason to gag this user!`)
 
                 message.channel.send(embed);
             } else {
@@ -188,7 +187,7 @@ client.on('message', message => {
                 const embed = new Discord.MessageEmbed()
                 .setColor("FF0000")
                 .setTitle("Error!")
-                .setDescription(`${member}, You need to state a reason for the mute!`)
+                .setDescription(`${member}, You need to state a reason to mute this user!`)
 
                 message.channel.send(embed);
             } else {
@@ -332,9 +331,75 @@ client.on('message', message => {
         }
     }
 }
+//KICK CMD
+//When an administrator types "!kick @user" then it will kick the targeted user..
+//This command is only accessible to users that have the "KICK_MEMBERS" permission.
+    if(cmd.toLowerCase().startsWith(`${prefix}kick`)){
+        if(message.member.hasPermission('KICK_MEMBERS')){
+            if(!user){
+                const embed = new Discord.MessageEmbed()
+                .setColor("FF0000")
+                .setTitle("Error!")
+                .setDescription(`${member}, You need to state the user you wish to kick!`)
 
+                message.channel.send(embed);
+            }
+            if(!reason){
+                const embed = new Discord.MessageEmbed()
+                .setColor("FF0000")
+                .setTitle("Error!")
+                .setDescription(`${member}, You need to state a reason you wish to kick this user!`)
 
+                message.channel.send(embed);
+            } else {
+                const embed = new Discord.MessageEmbed()
+                .setColor("FF0000")
+                .setTitle("KICKED")
+                .setDescription(`${user} has been kicked from the server`)
+                .addField(`USER`, `${user}`)
+                .addField(`ADMIN`, `${member}`)
+                .addField(`REASON`, `${reason}`)
+                
+                message.channel.send(embed);
+                user.kick();
+            }
+        }
+    }
+//BAN CMD
+//When an administrator types "!ban @user" then it will ban the targetted user.
+//This command is only accessible to users that have the "BAN_MEMBERS" permission.
+    if(cmd.toLowerCase().startsWith(`${prefix}ban`)){
+        if(message.member.hasPermission('BAN_MEMBERS')){
+            if(!user){
+                const embed = new Discord.MessageEmbed()
+                .setColor("FF0000")
+                .setTitle("Error!")
+                .setDescription(`${member}, You need to state the user you wish to ban!`)
 
+                message.channel.send(embed);
+            }
+
+            if(!reason){
+                const embed = new Discord.MessageEmbed()
+                .setColor("FF0000")
+                .setTitle("Error!")
+                .setDescription(`${member}, You need to state a reason you wish to ban this user!`)
+
+                message.channel.send(embed);
+            } else {
+                const embed = new Discord.MessageEmbed()
+                .setColor("FF0000")
+                .setTitle("BANNED")
+                .setDescription(`${user} has been banned from the server`)
+                .addField(`USER`, `${user}`)
+                .addField(`ADMIN`, `${member}`)
+                .addField(`REASON`, `${reason}`)
+                
+                message.channel.send(embed);
+                user.ban();
+            }
+        }
+    }
 //END OF ADMINISTRATION CMDS
 
 //When a user types "!help" it will show an embedded message that will show the two pages of the help menu.
@@ -384,6 +449,8 @@ client.on('message', message => {
         }
     }
 });
+
+
 
 //When a user joins the server, the bot says "Welcome, @user." in #welcome chat.
 client.on('guildMemberAdd', member => {
