@@ -1,6 +1,6 @@
 # MintzyBot - A Multi-Use Discord Bot.
 
-This project's goal is to make a multi-use Discord Bot.
+This project's goal is to make a multi-use Discord Bot with NodeJS
 
 # TODO:
 
@@ -26,8 +26,8 @@ This project's goal is to make a multi-use Discord Bot.
 
 # Dependencies:
 
--DiscordJS
-
 -NodeJS
+
+-DiscordJS
 
 -DotEnv-Flow
