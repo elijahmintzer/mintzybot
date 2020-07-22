@@ -14,6 +14,8 @@ This project's goal is to make a multi-use Discord Bot with NodeJS
 
 -Add a way to hide text/voice channels from people. (!dunce/undunce) ✔️
 
+----- EVERYTHING IS IN ONE FILE, I WOULD LIKE TO SPLIT COMMANDS INTO THEIR OWN EACH INDIVIDUAL FILE.
+
 -Add a way to kick people from the server. (!kick) ⬜
 
 -Add a way to ban people from the server. (!ban) ⬜
